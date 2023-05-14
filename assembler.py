@@ -9,3 +9,20 @@ f_name = input("Enter file path:")
 f = open(f_name,"r")
 lines = f.readlines()
 f.close()
+errors = []
+var_check = 1
+var = []
+rest = []
+for i in range(len(lines)):
+    lines[i] = lines[i].strip() 
+    if lines[i]:       
+        lines[i] = lines[i].split()
+        if lines[i][0] == "var" and var_check == 1:
+            var.append(lines[i][1])
+        elif lines[i][0] == "var" and var_check == 0:
+            errors.append("Variables not declared at the beginning at line",i+1,"\n")
+        elif lines[i][0] in A or lines[i][0] in B or lines[i][0] in C or lines[i][0] in D or lines[i][0] in E or lines[i][0] in F:
+            var_check = 0
+            rest.append(lines[i])
+        else:
+            errors.append("Typos in instruction name at line",i+1,"\n")
