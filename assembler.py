@@ -12,7 +12,9 @@ f.close()
 errors = []
 var_check = 1
 var = []
+lab = []
 rest = []
+ct = 0
 for i in range(len(lines)):
     lines[i] = lines[i].strip() 
     if lines[i]:       
@@ -20,9 +22,28 @@ for i in range(len(lines)):
         if lines[i][0] == "var" and var_check == 1:
             var.append(lines[i][1])
         elif lines[i][0] == "var" and var_check == 0:
-            errors.append("Variables not declared at the beginning at line",i+1,"\n")
+            errors.append("Variables not declared at the beginning at line "+str(i+1)+"\n")
+            ct += 1
+        elif ":" in lines[i]:
+            errors.append("General syntax error at line "+str(i+1)+"\n")
+            ct += 1
+        elif lines[i][0].endswith(":") and len(lines[i]) == 1:
+            var_check = 0
+            lab.append(lines[i][0][:-1])
+            rest.append(lines[i][0:1])
+        elif lines[i][0].endswith(":") and len(lines[i]) != 1:
+            var_check = 0
+            lab.append(lines[i][0][:-1])
+            rest.append(lines[i][0:1])
+            rest.append(lines[i][1:])
         elif lines[i][0] in A or lines[i][0] in B or lines[i][0] in C or lines[i][0] in D or lines[i][0] in E or lines[i][0] in F:
             var_check = 0
             rest.append(lines[i])
         else:
-            errors.append("Typos in instruction name at line",i+1,"\n")
+            var_check = 0
+            errors.append("Typos in instruction name at line "+str(i+1)+"\n")
+            ct += 1
+    else:
+        ct += 1
+        continue
+
