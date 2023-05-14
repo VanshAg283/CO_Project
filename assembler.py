@@ -5,3 +5,7 @@ D = {"ld":"00100","st":"00101"}
 E = {"jmp":"01111","jlt":"11100","jgt":"11101","je":"11111"}
 F = {"hlt":"11010"}
 reg = {"R0":"000","R1":"001","R2":"010","R3":"011","R4":"100","R5":"101","R6":"110"}
+f_name = input("Enter file path:")
+f = open(f_name,"r")
+lines = f.readlines()
+f.close()
