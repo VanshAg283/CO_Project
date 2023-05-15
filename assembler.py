@@ -49,6 +49,7 @@ for i in range(len(lines)):
 
 hlt_check = 0
 assembly = []
+inst = []
 for i in range(len(rest)):
     if rest[i][0] in A:
         if len(rest[i]) != 4:
@@ -63,6 +64,7 @@ for i in range(len(rest)):
             errors.append("Typo in register name at line "+str(ct+len(var)+i+1)+"\n")
         else:
             assembly.append(A[rest[i][0]]+"00"+reg[rest[i][1]]+reg[rest[i][2]]+reg[rest[i][3]])
+            inst.append(rest[i])
     elif rest[i][0] in B:
         if len(rest[i]) != 3:
                 errors.append("Syntax error at line "+str(ct+len(var)+i+1)+"\n")
@@ -75,6 +77,7 @@ for i in range(len(rest)):
                 errors.append("Typo in register name at line "+str(ct+len(var)+i+1)+"\n")
             else:
                 assembly.append(C[rest[i][0]]+"00000"+reg[rest[i][1]]+reg[rest[i][2]])
+                inst.append(rest[i])
         else: 
             if rest[i][1] == "FLAGS":
                 errors.append("Illegal use of FLAGS register at line "+str(ct+len(var)+i+1)+"\n")
@@ -86,6 +89,7 @@ for i in range(len(rest)):
                 errors.append("Illegal Immediate values at line "+str(ct+len(var)+i+1)+"\n")
             else:
                 assembly.append(B[rest[i][0]]+"0"+reg[rest[i][1]]+bin(int(rest[i][2][1:]))[2:].zfill(7))
+                inst.append(rest[i])
     elif rest[i][0] in C:
         if len(rest[i]) != 3:
             errors.append("Syntax error at line "+str(ct+len(var)+i+1)+"\n")
@@ -97,3 +101,40 @@ for i in range(len(rest)):
             errors.append("Typo in register name at line "+str(ct+len(var)+i+1)+"\n")
         else:
             assembly.append(C[rest[i][0]]+"00000"+reg[rest[i][1]]+reg[rest[i][2]])
+            inst.append(rest[i])
+    elif rest[i][0] in D:
+        if len(rest[i]) != 3:
+            errors.append("Syntax error at line "+str(ct+len(var)+i+1)+"\n")
+        elif rest[i][1] == "FLAGS":
+            errors.append("Illegal use of FLAGS register at line "+str(ct+len(var)+i+1)+"\n")
+        elif len(rest[i][1]) > 2 or rest[i][1] not in reg:
+            errors.append("Typo in register name at line "+str(ct+len(var)+i+1)+"\n")
+        elif rest[i][2] in lab:
+            errors.append("Misuse of labels as variables at line "+str(ct+len(var)+i+1)+"\n")
+        elif rest[i][2] not in var:
+            errors.append("Use of undefined variables at line "+str(ct+len(var)+i+1)+"\n")
+        elif rest[-1][0] not in F:
+            errors.append("hlt not being used as the last instruction\n")
+        else:
+            c = 0
+            for j in range(len(rest)):
+                if not(rest[j][0].endswith(":")):
+                    c += 1
+            assembly.append(D[rest[i][0]]+"0"+reg[rest[i][1]]+bin(c+var.index(rest[i][2]))[2:].zfill(7))
+            inst.append(rest[i])
+    elif rest[i][0] in E:
+        if len(rest[i]) != 2:
+            errors.append("Syntax error at line "+str(ct+len(var)+i+1)+"\n")
+        elif rest[i][1] in var:
+            errors.append("Misuse of variables as labels at line "+str(ct+len(var)+i+1)+"\n")
+        elif rest[i][1] not in lab:
+            errors.append("Use of undefined labels at line "+str(ct+len(var)+i+1)+"\n")
+        else:
+            cwl = 0
+            for j in range(len(rest)):
+                if not(rest[j][0].endswith(":")):
+                    cwl += 1
+                elif rest[j][0][:-1] == rest[i][1]:
+                    break
+            assembly.append(E[rest[i][0]]+"0000"+bin(cwl)[2:].zfill(7))
+            inst.append(rest[i])
