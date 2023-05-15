@@ -147,3 +147,7 @@ for i in range(len(rest)):
             hlt_check = 1
             assembly.append(F[rest[i][0]]+"00000000000")
             inst.append(rest[i])
+if hlt_check == 0:
+    errors.append("Missing hlt instruction\n")
+if inst[-1][0] not in F:
+    errors.append("hlt not being used as the last instruction\n")
