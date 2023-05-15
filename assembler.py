@@ -157,7 +157,11 @@ if len(errors) == 0:
     with open ("assembly_code.txt","w") as assembly_file:
         for i in range(len(assembly)):
             assembly_file.write(assembly[i]+"\n")
+    with open ("errors.txt","w") as error_file:
+        error_file.writelines(errors)
 else:
     print("Errors found")
     with open ("errors.txt","w") as error_file:
         error_file.writelines(errors)
+    with open ("assembly_code.txt","w") as assembly_file:
+        assembly_file.write("")
