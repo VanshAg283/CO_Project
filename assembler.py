@@ -162,7 +162,7 @@ if inst[-1][0] not in F and "Missing hlt instruction\n" not in errors:
 
 if len(errors) == 0:
     print("No errors found")
-    with open ("assembly_code.txt","w") as assembly_file:
+    with open ("machine_code.txt","w") as assembly_file:
         for i in range(len(assembly)):
             assembly_file.write(assembly[i]+"\n")
     with open ("errors.txt","w") as error_file:
@@ -172,5 +172,5 @@ else:
     print("Errors found")
     with open ("errors.txt","w") as error_file:
         error_file.writelines(errors)
-    with open ("assembly_code.txt","w") as assembly_file:
+    with open ("machine_code.txt","w") as assembly_file:
         assembly_file.write("")
