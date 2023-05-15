@@ -138,3 +138,12 @@ for i in range(len(rest)):
                     break
             assembly.append(E[rest[i][0]]+"0000"+bin(cwl)[2:].zfill(7))
             inst.append(rest[i])
+    elif rest[i][0][:-1] in lab:
+        continue
+    elif rest[i][0] in F:
+        if len(rest[i]) != 1:
+            errors.append("Syntax error at line "+str(ct+len(var)+i+1)+"\n")
+        else:
+            hlt_check = 1
+            assembly.append(F[rest[i][0]]+"00000000000")
+            inst.append(rest[i])
