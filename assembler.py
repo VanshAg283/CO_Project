@@ -47,3 +47,20 @@ for i in range(len(lines)):
         ct += 1
         continue
 
+hlt_check = 0
+assembly = []
+for i in range(len(rest)):
+    if rest[i][0] in A:
+        if len(rest[i]) != 4:
+            errors.append("Syntax error at line "+str(ct+len(var)+i+1)+"\n")
+        elif rest[i][1] == "FLAGS" or rest[i][2] == "FLAGS" or rest[i][3] == "FLAGS":
+            errors.append("Illegal use of FLAGS register at line "+str(ct+len(var)+i+1)+"\n")
+        elif len(rest[i][1]) > 2 or rest[i][1] not in reg:
+            errors.append("Typo in register name at line "+str(ct+len(var)+i+1)+"\n")
+        elif len(rest[i][2]) > 2 or rest[i][2] not in reg:
+            errors.append("Typo in register name at line "+str(ct+len(var)+i+1)+"\n")
+        elif len(rest[i][3]) > 2 or rest[i][3] not in reg:
+            errors.append("Typo in register name at line "+str(ct+len(var)+i+1)+"\n")
+        else:
+            assembly.append(A[rest[i][0]]+"00"+reg[rest[i][1]]+reg[rest[i][2]]+reg[rest[i][3]])
+
