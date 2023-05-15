@@ -5,7 +5,7 @@ This repository contains the source code for the assembler and simulator.
 
 ## Assembler
 The assembler is implemented in Python. The assembly file will be a text file which will be given as input from user that contains the assembly language code. The assembler will produce a machine code file with the name as machine_code
-- **Features**
+### Features
 1. Converts assembly language programs into machine code.
 2. Supports a range of instructions and addressing modes.
 3. Comprehensive error handling to catch and report syntax errors, undefined labels, invalid instructions, and addressing mode mismatches.
