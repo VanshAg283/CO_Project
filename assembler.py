@@ -86,4 +86,14 @@ for i in range(len(rest)):
                 errors.append("Illegal Immediate values at line "+str(ct+len(var)+i+1)+"\n")
             else:
                 assembly.append(B[rest[i][0]]+"0"+reg[rest[i][1]]+bin(int(rest[i][2][1:]))[2:].zfill(7))
-
+    elif rest[i][0] in C:
+        if len(rest[i]) != 3:
+            errors.append("Syntax error at line "+str(ct+len(var)+i+1)+"\n")
+        elif rest[i][1] == "FLAGS" or rest[i][2] == "FLAGS":
+            errors.append("Illegal use of FLAGS register at line "+str(ct+len(var)+i+1)+"\n")
+        elif len(rest[i][1]) > 2 or rest[i][1] not in reg:
+            errors.append("Typo in register name at line "+str(ct+len(var)+i+1)+"\n")
+        elif len(rest[i][2]) > 2 or rest[i][2] not in reg:
+            errors.append("Typo in register name at line "+str(ct+len(var)+i+1)+"\n")
+        else:
+            assembly.append(C[rest[i][0]]+"00000"+reg[rest[i][1]]+reg[rest[i][2]])
