@@ -151,3 +151,13 @@ if hlt_check == 0:
     errors.append("Missing hlt instruction\n")
 if inst[-1][0] not in F:
     errors.append("hlt not being used as the last instruction\n")
+
+if len(errors) == 0:
+    print("No errors found")
+    with open ("assembly_code.txt","w") as assembly_file:
+        for i in range(len(assembly)):
+            assembly_file.write(assembly[i]+"\n")
+else:
+    print("Errors found")
+    with open ("errors.txt","w") as error_file:
+        error_file.writelines(errors)
