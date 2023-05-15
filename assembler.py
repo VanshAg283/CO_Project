@@ -74,8 +74,12 @@ for i in range(len(rest)):
             elif len(rest[i][1]) > 2 or rest[i][1] not in reg:
                 errors.append("Typo in register name at line "+str(ct+len(var)+i+1)+"\n")
             else:
-                assembly.append(C[rest[i][0]]+"00000"+reg[rest[i][1]]+reg[rest[i][2]])
-                inst.append(rest[i])
+                if rest[i][2] in reg:
+                    assembly.append(C[rest[i][0]]+"00000"+reg[rest[i][1]]+reg[rest[i][2]])
+                    inst.append(rest[i])
+                elif rest[i][2] == "FLAGS":
+                    assembly.append(C[rest[i][0]]+"00000"+reg[rest[i][1]]+"111")
+                    inst.append(rest[i])
         else: 
             if rest[i][1] == "FLAGS":
                 errors.append("Illegal use of FLAGS register at line "+str(ct+len(var)+i+1)+"\n")
