@@ -63,4 +63,27 @@ for i in range(len(rest)):
             errors.append("Typo in register name at line "+str(ct+len(var)+i+1)+"\n")
         else:
             assembly.append(A[rest[i][0]]+"00"+reg[rest[i][1]]+reg[rest[i][2]]+reg[rest[i][3]])
+    elif rest[i][0] in B:
+        if len(rest[i]) != 3:
+                errors.append("Syntax error at line "+str(ct+len(var)+i+1)+"\n")
+        elif rest[i][0] == "mov" and (rest[i][2] in reg or rest[i][2] == "FLAGS"):
+            if rest[i][1] == "FLAGS":
+                errors.append("Illegal use of FLAGS register at line "+str(ct+len(var)+i+1)+"\n")
+            elif len(rest[i][1]) > 2 or rest[i][1] not in reg:
+                errors.append("Typo in register name at line "+str(ct+len(var)+i+1)+"\n")
+            elif len(rest[i][2]) > 2 or rest[i][2] not in reg:
+                errors.append("Typo in register name at line "+str(ct+len(var)+i+1)+"\n")
+            else:
+                assembly.append(C[rest[i][0]]+"00000"+reg[rest[i][1]]+reg[rest[i][2]])
+        else: 
+            if rest[i][1] == "FLAGS":
+                errors.append("Illegal use of FLAGS register at line "+str(ct+len(var)+i+1)+"\n")
+            elif len(rest[i][1]) > 2 or rest[i][1] not in reg:
+                errors.append("Typo in register name at line "+str(ct+len(var)+i+1)+"\n")
+            elif not(rest[i][2][1:].isdigit) or not(rest[i][2].startswith("$")):
+                errors.append("Syntax error at line",ct+len(var)+i+1,"\n")
+            elif int(rest[i][2][1:]) > 127 or int(rest[i][2][1:]) < 0:
+                errors.append("Illegal Immediate values at line "+str(ct+len(var)+i+1)+"\n")
+            else:
+                assembly.append(B[rest[i][0]]+"0"+reg[rest[i][1]]+bin(int(rest[i][2][1:]))[2:].zfill(7))
 
