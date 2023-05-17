@@ -5,10 +5,13 @@ D = {"ld":"00100","st":"00101"}
 E = {"jmp":"01111","jlt":"11100","jgt":"11101","je":"11111"}
 F = {"hlt":"11010"}
 reg = {"R0":"000","R1":"001","R2":"010","R3":"011","R4":"100","R5":"101","R6":"110"}
-f_name = input("Enter file path:")
-f = open(f_name,"r")
-lines = f.readlines()
-f.close()
+lines = []
+while True:
+    try:
+        line = input()
+    except EOFError:
+        break
+    lines.append(line)
 errors = []
 var_check = 1
 var = []
@@ -161,16 +164,10 @@ if inst[-1][0] not in F and "Missing hlt instruction\n" not in errors:
     errors.append("hlt not being used as the last instruction\n")
 
 if len(errors) == 0:
-    print("No errors found")
-    with open ("machine_code.txt","w") as assembly_file:
-        for i in range(len(assembly)):
-            assembly_file.write(assembly[i]+"\n")
-    with open ("errors.txt","w") as error_file:
-        error_file.writelines(errors)
+    for i in range(len(assembly)):
+        print(assembly[i]+"\n")
     
 else:
     print("Errors found")
     with open ("errors.txt","w") as error_file:
         error_file.writelines(errors)
-    with open ("machine_code.txt","w") as assembly_file:
-        assembly_file.write("")
