@@ -50,6 +50,59 @@ for i in range(len(lines)):
         ct += 1
         continue
 
+#Function to convert floating point to binary
+def float_bin(number, places = 5):
+    whole, dec = str(number).split(".")
+    whole = int(whole)
+    dec = int (dec)
+    res = bin(whole)[2:] + "."
+    for x in range(places):
+        whole, dec = str((decimal_converter(dec)) * 2).split(".")
+        dec = int(dec)
+        res += whole
+        if dec == 0:
+            break
+    return res
+
+def decimal_converter(num):
+    while num > 1:
+        num /= 10
+    return num
+
+#Function to convert binary of floating point to 8 bit value with 3 exponent and 5 mantissa bits
+def float_bin_8bit(bin_num):
+    bin_num = bin_num.split(".")
+    if bin_num[0]:
+        dec = bin_num[0][1:]
+        bin_num = bin_num[0][0] + "." + dec + bin_num[1]
+        exp = len(dec)
+        mant = bin_num[2:]
+        if len(mant) > 5:
+            mant = mant[:5]
+        elif len(mant) < 5:
+            mant = mant + "0"*(5-len(mant))
+        if exp < 5:
+            w = 3 + exp
+            w = bin(w)[2:].zfill(3)
+        else:
+            return 0
+        return w + mant
+    else:
+        dec = bin_num[1]
+        exp = - (len(dec) - len(dec.lstrip("0")) + 1)
+        dec = dec.lstrip("0")
+        man = dec[1:]
+        if len(man) > 5:
+            man = man[:5]
+        elif len(man) < 5:
+            man = man + "0"*(5-len(man))
+        if exp > -4:
+            w = 3 + exp
+            w = bin(w)[2:].zfill(3)
+        else:
+            return 0
+        return w + man
+
 hlt_check = 0
 assembly = []
 inst = []
@@ -94,6 +147,13 @@ for i in range(len(rest)):
                 errors.append("Syntax error at line "+str(ct+len(var)+ctins+1)+"\n")
             elif int(rest[i][2][1:]) > 127 or int(rest[i][2][1:]) < 0:
                 errors.append("Illegal Immediate values at line "+str(ct+len(var)+ctins+1)+"\n")
+            elif rest[i][0] == "movf":
+                bin_num = float_bin_8bit(float_bin(int(rest[i][2][1:])))
+                if bin_num != 0:
+                    assembly.append(B[rest[i][0]]+reg[rest[i][1]]+bin_num)
+                    inst.append(rest[i])
+                else:
+                    errors.append("Illegal Immediate values at line "+str(ct+len(var)+ctins+1)+"\n")
             else:
                 assembly.append(B[rest[i][0]]+"0"+reg[rest[i][1]]+bin(int(rest[i][2][1:]))[2:].zfill(7))
                 inst.append(rest[i])
@@ -171,5 +231,3 @@ else:
     print("Errors found")
     for i in range(len(errors)):
         print(errors[i])
-    #with open ("errors.txt","w") as error_file:
-        #error_file.writelines(errors)
