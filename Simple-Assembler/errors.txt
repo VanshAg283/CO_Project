@@ -1,2 +1,0 @@
-Use of undefined variable myvar at line 8
-Use of undefined variable myvar at line 9
