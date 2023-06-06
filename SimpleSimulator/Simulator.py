@@ -16,7 +16,7 @@ while True:
 
 for inst in lines:
     inst.strip()
-    instructions.append(inst[:-1])
+    instructions.append(inst[:16])
 
 for i in range(len(instructions)):
     memAddress[bin(i)[2:].zfill(7)] = instructions[i]
@@ -47,7 +47,7 @@ def add(inst):
         regs[reg1] = 0
     else:
         clearFlag()
-    print(bin(regs['PC'])[2:].zfill(7), end = "\t\t")
+    print(bin(regs['PC'])[2:].zfill(7), end = "        ")
     for i in regs:
         print(bin(regs[i])[2:].zfill(16), end = " ")
         if i == "110":
@@ -66,10 +66,7 @@ def sub(inst):
         regs[reg1] = 0
     else:
         clearFlag()
-    for key in memAddress:
-        if memAddress[key] == inst:
-            print(key, end = "\t\t")
-            break
+    print(bin(regs['PC'])[2:].zfill(7), end = "        ")
     for i in regs:
         print(bin(regs[i])[2:].zfill(16), end = " ")
         if i == "110":
@@ -82,10 +79,7 @@ def movi(inst):
     reg1 = inst[6:9]
     imm = inst[9:16]
     regs[reg1] = int(imm, 2)
-    for key in memAddress:
-        if memAddress[key] == inst:
-            print(key, end = "\t\t")
-            break
+    print(bin(regs['PC'])[2:].zfill(7), end = "        ")
     for i in regs:
         print(bin(regs[i])[2:].zfill(16), end = " ")
         if i == "110":
@@ -97,10 +91,7 @@ def movi(inst):
 def mov(inst):
     reg1 = inst[10:13]
     reg2 = inst[13:16]
-    for key in memAddress:
-        if memAddress[key] == inst:
-            print(key, end = "\t\t")
-            break
+    print(bin(regs['PC'])[2:].zfill(7), end = "        ")
     if reg2 != "111":
         regs[reg1] = regs[reg2]
         for i in regs:
@@ -128,10 +119,7 @@ def ld(inst):
     mem_addr = inst[9:16]
     regs[reg1] = int(memAddress[mem_addr],2)
     #print the memory address at which inst is stored from dictionary memAddress
-    for key in memAddress:
-        if memAddress[key] == inst:
-            print(key, end = "\t\t")
-            break
+    print(bin(regs['PC'])[2:].zfill(7), end = "        ")
     for i in regs:
         print(bin(regs[i])[2:].zfill(16), end = " ")
         if i == "110":
@@ -144,10 +132,7 @@ def st(inst):
     reg1 = inst[6:9]
     mem_addr = inst[9:16]
     memAddress[mem_addr] = bin(regs[reg1])[2:].zfill(16)
-    for key in memAddress:
-        if memAddress[key] == inst:
-            print(key, end = "\t\t")
-            break
+    print(bin(regs['PC'])[2:].zfill(7), end = "        ")
     for i in regs:
         print(bin(regs[i])[2:].zfill(16), end = " ")
         if i == "110":
@@ -166,10 +151,7 @@ def mul(inst):
         regs[reg1] = 0
     else:
         clearFlag()
-    for key in memAddress:
-        if memAddress[key] == inst:
-            print(key, end = "\t\t")
-            break
+    print(bin(regs['PC'])[2:].zfill(7), end = "        ")
     for i in regs:
         print(bin(regs[i])[2:].zfill(16), end = " ")
         if i == "110":
@@ -189,10 +171,7 @@ def div(inst):
         regs['000'] = regs[reg3] // regs[reg4]
         regs['001'] = regs[reg3] % regs[reg4]
         clearFlag()
-    for key in memAddress:
-        if memAddress[key] == inst:
-            print(key, end = "\t\t")
-            break
+    print(bin(regs['PC'])[2:].zfill(7), end = "        ")
     for i in regs:
         print(bin(regs[i])[2:].zfill(16), end = " ")
         if i == "110":
@@ -205,10 +184,7 @@ def rs(inst):
     reg1 = inst[6:9]
     imm = inst[9:16]
     regs[reg1] = regs[reg1] >> int(imm, 2)
-    for key in memAddress:
-        if memAddress[key] == inst:
-            print(key, end = "\t\t")
-            break
+    print(bin(regs['PC'])[2:].zfill(7), end = "        ")
     for i in regs:
         print(bin(regs[i])[2:].zfill(16), end = " ")
         if i == "110":
@@ -221,10 +197,7 @@ def ls(inst):
     reg1 = inst[6:9]
     imm = inst[9:16]
     regs[reg1] = regs[reg1] << int(imm, 2)
-    for key in memAddress:
-        if memAddress[key] == inst:
-            print(key, end = "\t\t")
-            break
+    print(bin(regs['PC'])[2:].zfill(7), end = "        ")
     for i in regs:
         print(bin(regs[i])[2:].zfill(16), end = " ")
         if i == "110":
@@ -238,10 +211,7 @@ def xor(inst):
     reg2 = inst[10:13]
     reg3 = inst[13:16]
     regs[reg1] = regs[reg2] ^ regs[reg3]
-    for key in memAddress:
-        if memAddress[key] == inst:
-            print(key, end = "\t\t")
-            break
+    print(bin(regs['PC'])[2:].zfill(7), end = "        ")
     for i in regs:
         print(bin(regs[i])[2:].zfill(16), end = " ")
         if i == "110":
@@ -255,10 +225,7 @@ def or_op(inst):
     reg2 = inst[10:13]
     reg3 = inst[13:16]
     regs[reg1] = regs[reg2] | regs[reg3]
-    for key in memAddress:
-        if memAddress[key] == inst:
-            print(key, end = "\t\t")
-            break
+    print(bin(regs['PC'])[2:].zfill(7), end = "        ")
     for i in regs:
         print(bin(regs[i])[2:].zfill(16), end = " ")
         if i == "110":
@@ -272,10 +239,7 @@ def and_op(inst):
     reg2 = inst[10:13]
     reg3 = inst[13:16]
     regs[reg1] = regs[reg2] & regs[reg3]
-    for key in memAddress:
-        if memAddress[key] == inst:
-            print(key, end = "\t\t")
-            break
+    print(bin(regs['PC'])[2:].zfill(7), end = "        ")
     for i in regs:
         print(bin(regs[i])[2:].zfill(16), end = " ")
         if i == "110":
@@ -288,10 +252,7 @@ def not_op(inst):
     reg1 = inst[10:13]
     reg2 = inst[13:16]
     regs[reg1] = ~regs[reg2]
-    for key in memAddress:
-        if memAddress[key] == inst:
-            print(key, end = "\t\t")
-            break
+    print(bin(regs['PC'])[2:].zfill(7), end = "        ")
     for i in regs:
         print(bin(regs[i])[2:].zfill(16), end =" ")
         if i == "110":
@@ -309,10 +270,7 @@ def cmp_op(inst):
         setGreater()
     else:
         setEqual()
-    for key in memAddress:
-        if memAddress[key] == inst:
-            print(key, end = "\t\t")
-            break
+    print(bin(regs['PC'])[2:].zfill(7), end = "        ")
     for i in regs:
         print(bin(regs[i])[2:].zfill(16),end = " ")
         if i == "110":
@@ -328,7 +286,7 @@ def jmp(inst):
     regs["PC"] = int(mem_addr, 2)
     for key in memAddress:
         if memAddress[key] == inst:
-            print(key, end = "\t\t")
+            print(key, end = "        ")
             break
     for i in regs:
         print(bin(regs[i])[2:].zfill(16),end = " ")
@@ -349,7 +307,7 @@ def jlt(inst):
         clearFlag()
     for key in memAddress:
         if memAddress[key] == inst:
-            print(key, end = "\t\t")
+            print(key, end = "        ")
             break
     for i in regs:
         print(bin(regs[i])[2:].zfill(16),end = " ")
@@ -369,7 +327,7 @@ def jgt(inst):
         clearFlag()
     for key in memAddress:
         if memAddress[key] == inst:
-            print(key, end = "\t\t")
+            print(key, end = "        ")
             break
     for i in regs:
         print(bin(regs[i])[2:].zfill(16),end = " ")
@@ -389,7 +347,7 @@ def je(inst):
         clearFlag()
     for key in memAddress:
         if memAddress[key] == inst:
-            print(key, end = "\t\t")
+            print(key, end = "        ")
             break
     for i in regs:
         print(bin(regs[i])[2:].zfill(16),end = " ")
@@ -401,7 +359,7 @@ def je(inst):
 def halt(inst):
     for key in memAddress:
         if memAddress[key] == inst:
-            print(key, end = "\t\t")
+            print(key, end = "        ")
             break
     for i in regs:
         print(bin(regs[i])[2:].zfill(16),end = " ")
