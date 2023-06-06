@@ -169,5 +169,7 @@ if len(errors) == 0:
     
 else:
     print("Errors found")
-    with open ("errors.txt","w") as error_file:
-        error_file.writelines(errors)
+    for i in range(len(errors)):
+        print(errors[i])
+    #with open ("errors.txt","w") as error_file:
+        #error_file.writelines(errors)
