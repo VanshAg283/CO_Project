@@ -4,8 +4,8 @@ memAddress = {}
 for i in range(128):
     memAddress[bin(i)[2:].zfill(7)] = '0000000000000000'
 
-
 instructions = []
+
 lines = []
 while True:
     try:
