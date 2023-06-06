@@ -14,7 +14,7 @@ The assembler is implemented in Python. The assembly file will be a text file wh
 
 
 ## Simulator
-The simulator is implemented in Python. The machine code will be taken from stdin as input from user. The simulator will 
+The simulator is implemented in Python. The machine code will be taken from stdin as input from user. The simulator will produce the simulation of the code.
 ### Features
 1. Simulates the execution of machine code.
 2. Provides a listing of the machine code and the simulated registers.
