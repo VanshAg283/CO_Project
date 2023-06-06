@@ -12,3 +12,11 @@ The assembler is implemented in Python. The assembly file will be a text file wh
 4. Generation of a listing file with machine code, and error messages for debugging.
 5. Clear and informative error messages with line numbers to pinpoint the location and nature of errors.
 
+
+## Simulator
+The simulator is implemented in Python. The machine code will be taken from stdin as input from user. The simulator will 
+### Features
+1. Simulates the execution of machine code.
+2. Provides a listing of the machine code and the simulated registers.
+3. Provides a representation of the memory dump.
+4. Provides a representation of the program counter.
