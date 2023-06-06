@@ -1,5 +1,3 @@
-import sys
-
 regs = {"000": 0, "001": 0, "010": 0, "011": 0,"100": 0, "101": 0, "110": 0, "111": "0" * 16,"PC": 0}
 memAddress = {}
 #initialise memAddress dictionary with keys of 128 memory addresses starting from '0000000'
