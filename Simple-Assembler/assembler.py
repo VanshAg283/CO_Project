@@ -148,7 +148,7 @@ for i in range(len(rest)):
             elif int(rest[i][2][1:]) > 127 or int(rest[i][2][1:]) < 0:
                 errors.append("Illegal Immediate values at line "+str(ct+len(var)+ctins+1)+"\n")
             elif rest[i][0] == "movf":
-                bin_num = float_bin_8bit(float_bin(int(rest[i][2][1:])))
+                bin_num = float_bin_8bit(float_bin(float(rest[i][2][1:])))
                 if bin_num != 0:
                     assembly.append(B[rest[i][0]]+reg[rest[i][1]]+bin_num)
                     inst.append(rest[i])
